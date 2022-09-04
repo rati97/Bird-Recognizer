@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en-US">
+    <meta charset="utf-8">
+    <title>Bird Species Explorer</title>
+  </head>
+
+  <body>
+    <a href = "{% url 'home:index' %}">Home</a>
+    {% block content %}
+    <header>
+      <h1>Bird species in our database:</h1>
+    </header>
+    <section>
+      {% if bird_species %}
+      <ul>
+        {% for bird in bird_species %}
+        <li><a href="/birdspecies/{{bird.id}}">{{bird.name}}</a></li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No bird species available in the database.</p>
+      {% endif %}
+    </section>
+    {% endblock %}
+  </body>
+</html>

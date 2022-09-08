@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en-US">
+    <meta charset="utf-8">
+    <title>Bird Detector</title>
+  </head>
+  <body>
+    <a href = "{% url 'home:index' %}">Home</a>
+    {% block content %}
+    <p>Upload image here</p>
+    <form enctype=multipart/form-data action="" method="post">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Detect bird species!">
+    </form>
+    {% endblock %}
+  </body>
+</html>

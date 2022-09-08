@@ -1,0 +1,6 @@
+{% extends "birdDetector/index.html" %}
+{% block content %}
+<a href = "{% url 'birddetector:index' %}">Make another detection</a>
+<p>request successful!</p>
+<img src = "{{ result }}" alt="/">
+{% endblock %}

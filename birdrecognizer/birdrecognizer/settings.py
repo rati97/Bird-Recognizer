@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'home.apps.HomeConfig',
     'birdSpecies.apps.BirdspeciesConfig',
-    'home.apps.HomeConfig'
+    'birdDetector.apps.BirddetectorConfig'
 ]
 
 MIDDLEWARE = [

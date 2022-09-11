@@ -17,7 +17,28 @@ class birdRecognizer():
             for line in lines:
                 self.class_names.append(line.strip()[1:-2])
 
+    import cv2
+
+    def __draw_text(self, img, text,
+                    font=cv2.FONT_HERSHEY_PLAIN,
+                    pos=(0, 0),
+                    font_scale=3,
+                    font_thickness=2,
+                    text_color=(0, 255, 0),
+                    text_color_bg=(0, 0, 0)
+                    ):
+
+        x, y = pos
+        text_size, _ = cv2.getTextSize(text, font, font_scale, font_thickness)
+        text_w, text_h = text_size
+        cv2.rectangle(img, pos, (x + text_w, y + text_h), text_color_bg, -1)
+        cv2.putText(img, text, (x, int(y + text_h + font_scale - 1)),
+                    font, font_scale, text_color, font_thickness)
+
+        return text_size
+
     def extract_bird_roi(self, img, threshold=0.5):
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         # get image dimensions
         width, height = img.shape[0], img.shape[1]
 
@@ -61,8 +82,10 @@ class birdRecognizer():
 
         for n, roi in enumerate(rois):
             cv2.rectangle(image_copy, roi[1][0], roi[1][1], (0, 255, 0))
-            cv2.putText(image_copy, predictions[n], (roi[1][0][0], roi[1][0][1] + 30),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
+            self.__draw_text(image_copy, predictions[n], cv2.FONT_HERSHEY_SIMPLEX, (roi[1][0][0], roi[1][0][1]),
+                             0.7, 2, (255, 255, 255), (0, 255, 0))
+            # cv2.putText(image_copy, predictions[n], (roi[1][0][0], roi[1][0][1] + 30),
+            #            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
 
         return image_copy
 

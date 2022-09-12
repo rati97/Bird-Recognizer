@@ -1,6 +1,9 @@
 {% extends "birdDetector/index.html" %}
 {% block content %}
-<a href = "{% url 'birddetector:index' %}">Make another detection</a>
-<p>request successful!</p>
-<img src = "{{ result }}" alt="/">
+<nav class = "nav nav-tabs">
+    <a href = "{% url 'home:index' %}" class = 'nav-link link-primary'><i class="bi bi-house"></i> Home</a>
+    <a href = "{% url 'birddetector:index' %}" class = 'nav-link link-secondary'><i class="bi bi-arrow-left-square"></i> Make another detection</a>
+</nav>
+<h3 class = "text-success">Result:</h3>
+<img src = "{{ result }}" alt="/" class = "img-fluid">
 {% endblock %}

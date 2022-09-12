@@ -3,25 +3,69 @@
   <head lang="en-US">
     <meta charset="utf-8">
     <title>Bird Species Explorer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   </head>
 
   <body>
-    <a href = "{% url 'home:index' %}">Home</a>
-    {% block content %}
-    <header>
-      <h1>Bird species in our database:</h1>
-    </header>
-    <section>
-      {% if bird_species %}
-      <ul>
-        {% for bird in bird_species %}
-        <li><a href="/birdspecies/{{bird.id}}">{{bird.name}}</a></li>
-        {% endfor %}
+    <div class = 'container'>
+      {% block content %}
+      <nav class = "nav nav-tabs">
+        <a href = "{% url 'home:index' %}" class = 'nav-link link-primary'><i class="bi bi-house"></i> Home</a>
+      </nav>
+      
+      <header>
+        <h1>Bird species in our database:</h1>
+      </header>
+      <section>
+        {% if page_obj %}
+        <ul class = "list-group list-unstyled">
+          {% for bird in page_obj %}
+            <a href="/birdspecies/{{bird.id}}/" class = "text-decoration-none">
+              <li class = "list-group-item-action list-group-item-primary">
+                <figure class = "d-flex">
+                  {% if bird.image_path %}
+                    <img src = "{{ bird.image_path.url }}" alt= "Image missing" class = "img-fluid w-25 rounded-circle shadow-lg">
+                  {% endif %}
+                  <div class = "d-block p-10">
+                    <h5 class = "link-info">
+                      {{ bird.name }}
+                    </h5>
+                    <p class = "overflow-auto" style = "max-height: 60%"> 
+                      {{bird.description}}
+                    </p>
+                  </div>
+                </figure>
+              </li>
+            </a>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p>No bird species available in the database.</p>
+        {% endif %}
+      </section>
+      <ul class="pagination pagionation-lg">
+        <li class = "page-item">
+          {% if page_obj.has_previous %}
+              <a href="?page=1">&laquo; first</a>
+              <a href="?page={{ page_obj.previous_page_number }}" class = "page-item-disabled">previous</a>
+          {% endif %}
+        </li>
+        <li class = "page-item disabled">
+          <span class="current">
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+          </span>
+        </li>
+        <li class = "page-item">
+          {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}">next</a>
+              <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+        </li>
       </ul>
-      {% else %}
-      <p>No bird species available in the database.</p>
-      {% endif %}
-    </section>
-    {% endblock %}
+      {% endblock %}
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script> 
   </body>
 </html>

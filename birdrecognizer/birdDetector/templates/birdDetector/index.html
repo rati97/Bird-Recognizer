@@ -3,16 +3,29 @@
   <head lang="en-US">
     <meta charset="utf-8">
     <title>Bird Detector</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   </head>
   <body>
-    <a href = "{% url 'home:index' %}">Home</a>
-    {% block content %}
-    <p>Upload image here</p>
-    <form enctype=multipart/form-data action="" method="post">
-      {% csrf_token %}
-      {{ form }}
-      <input type="submit" value="Detect bird species!">
-    </form>
-    {% endblock %}
+    <div class = "container">
+      {% block content %}
+      <nav class = "nav nav-tabs">
+        <a href = "{% url 'home:index' %}" class = 'nav-link link-primary'><i class="bi bi-house"></i> Home</a>
+      </nav>
+      <h4 class = "text-info">Upload a clear image that has one or more birds in it.</h4>
+      <form enctype=multipart/form-data action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Detect bird species!" class = "btn btn-primary">
+      </form>
+      <p>
+        Our species classifier model is trained on <a href = "https://www.kaggle.com/datasets/gpiosenka/100-bird-species">400 Bird Species Dataset</a> from Kaggle.
+      </p>
+      <p>
+        We also use EfficientDet from <a href = "https://tfhub.dev/">Tensorflow Hub</a> to determine the locations of birds in an image.
+      </p>
+      {% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script> 
   </body>
 </html>

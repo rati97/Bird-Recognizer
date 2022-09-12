@@ -1,5 +1,14 @@
 {% extends "birdSpecies/index.html" %} 
 {% block content %}
+<nav class = "nav nav-tabs">
+    <a href = "{% url 'home:index' %}" class = 'nav-link link-primary'><i class="bi bi-house"></i> Home</a>
+    <a href = "{% url 'birdspecies:index'%}" class = 'nav-link link-secondary'><i class="bi bi-arrow-left-square"></i> Explore More</a>
+</nav>
 <h1>{{ bird.name }}</h1>
-<p>{{ bird.description }}</p>
+{% if bird.image_path %}
+    <img src = "{{ bird.image_path.url }}" alt= "Image missing" class = "img-fluid">
+{% endif %}
+{% if bird.description %}
+    <p class = "text-wrap">{{ bird.description }}</p>
+{% endif %}
 {% endblock %}
